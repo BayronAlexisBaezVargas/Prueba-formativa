@@ -1,4 +1,5 @@
 trabajadores = []
+titulo="Nombre,Apellido,cargo,Sueldo en bruto,Desc. salud,Desc. AFP,Liquido a pagar"
 cargos = ["CEO", "Desarrollador", "Analista de datos"]
 
 def registrar_trabajador():
@@ -42,42 +43,13 @@ def listar_trabajadores():
             print(f"Desc. AFP: {trabajador['desc_afp']}")
             print(f"Líquido a pagar: {trabajador['sueldo_liquido']}")
             print()
-def imprimir_planilla():
-    print("Opciones para imprimir la planilla de sueldos:")
-    print("1. Imprimir todos los trabajadores")
-    print("2. Imprimir por cargo")
-    opcion = input("Seleccione una opción: ")
 
-    if opcion == '1':
-        imprimir_planilla_a_archivo(trabajadores, "todos_los_trabajadores.txt")
-    elif opcion == '2':
-        cargos_str = ""
-        for i in range(len(cargos)):
-            if i == len(cargos) - 1:
-                cargos_str += cargos[i]
-            else:
-                cargos_str += cargos[i] + ", "
-                
-        cargo = input(f"Ingrese el cargo para filtrar ({cargos_str}): ")
-        while cargo not in cargos:
-            print("Cargo no válido. Intente nuevamente.")
-            cargo = input(f"Ingrese el cargo para filtrar ({cargos_str}): ")
-
-        trabajadores_filtrados = []
-        for t in trabajadores:
-            if t['cargo'] == cargo:
-                trabajadores_filtrados.append(t)
-
-        imprimir_planilla_a_archivo(trabajadores_filtrados, f"planilla_{cargo}.txt")
-    else:
-        print("Opción no válida.\n")
-
-
-def imprimir_planilla_a_archivo(trabajadores, nombre_archivo):
-    with open(nombre_archivo, 'w') as archivo:
+def imprimir_planilla_a_archivo():
+    with open("Planilla_de_Trabajadores.txt","w") as archivo:
+        archivo.write(titulo)
         for trabajador in trabajadores:
-            archivo.write(f"Nombre: {trabajador['nombre']} {trabajador['apellido']}\n")
-
+            archivo.write(f"\n{trabajador["nombre"]} {trabajador["apellido"]} {trabajador['cargo']} {trabajador["sueldo_bruto"]} {trabajador["desc_salud"]} {trabajador['desc_afp']} {trabajador['sueldo_liquido']}")
+    print("\nArchivo creado correctamente\n")
 def mostrar_menu():
     print("Menú de opciones:")
     print("1. Registrar trabajador")
@@ -94,7 +66,7 @@ def main():
         elif opcion == '2':
             listar_trabajadores()
         elif opcion == '3':
-            print("Opción para imprimir la planilla de sueldos. Implementación pendiente por un compañero.\n")
+           imprimir_planilla_a_archivo()
         elif opcion == '4':
             print("Saliendo del programa...")
             break
