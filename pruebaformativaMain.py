@@ -1,3 +1,0 @@
-import Funciones
-Funciones.main()
-        
